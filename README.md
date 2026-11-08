@@ -14,6 +14,6 @@ Florian & Timo
 
 |Team |Thema  |
 |--|--|
-|Maloy & Elèna |Jobliste  |
+|Maloy & Eléna |Jobliste  |
 |Simon & Noah |Mitarbeiterliste  |
 |Florian & Timo |Projektliste  |
