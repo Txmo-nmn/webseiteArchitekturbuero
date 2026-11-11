@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!-- ***************************************************************
+*    Diese Datei gehört zum  WebEng-Kurs an der HNU
+*    Copyright (c) by Simon Jegl
+*    Frei benutzbar von WebEng-Studierenden
+******************************************************************** -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <title>Buch Vorlage 2</title>
+</head>
+<body>
+<h1>CRUD: Lesen</h1>
+
+<div id="datenMaske" class="maske">
+    <h2>Folgende Bücher stehen zur Auswahl</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Titel</th>
+            <th>Autor:in</th>
+            <th>Beschreibung</th>
+            <th>Zustand</th>
+            <th>Preis</th>
+        </tr>
+        </thead>
+        <tbody id="datenMaskeZeilen">
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // A-1. Vervollständige den Buch-Konstruktor zum Erstellen eines Buch-Objekts
+    function Buch(titel, autor, zustand, preis) {
+        console.log(` Auruf des Konstruktors Buch mit
+             ${titel},
+             ${autor},
+             ${zustand},
+             ${preis}`);
+
+        this.titel = titel;
+        this.autor = autor;
+        this.zustand = zustand;
+        this.preis = preis;
+
+
+    }
+
+
+    //Erstellung eines Array-Objekt
+    var datenArray = new Array();
+    //A-2. Befülle das datenArray mit 3 kompletten Einträgen
+    datenArray[0] = new Buch("Harry Potter", "J.K. Rowling", "gebraucht", 10);
+    datenArray[1] = new Buch("Harry Potter 2", "J.K. Rowling", "neu", 14);
+    datenArray[2] = new Buch("Harry Potter 3", "J.K. Rowling", "neu", 9);
+
+    //Ausgabe des Original-Arrays:
+    console.table(datenArray);
+
+    //Lesen jedes Elements im Array und Ausgabe in Daten-Maske
+    function lesenAusArray() {
+        console.log("lesenAusArray");
+        // B-1. Initialisiere die Daten-Maske (d.h. leere den Zeilen-Teil in der Daten-Maske)
+
+        $("#datenMaskeZeilen").empty();
+        // B-2. Schleife über das Array
+
+        for (var i = 0; i < datenArray.length; i++) {
+            var myHTML = `<tr>
+
+                            <td>${datenArray[i].titel}</td>
+                            <td>${datenArray[i].autor}</td>
+                            <td>${datenArray[i].zustand}</td>
+                            <td>${datenArray[i].preis}</td>
+ </tr>`
+            $('#datenMaskeZeilen').append(myHTML);
+
+
+        }
+    }
+
+    lesenAusArray();lesenAusArray();
+
+
+</script>
+</body>
+</html>
+
+
+
+
+

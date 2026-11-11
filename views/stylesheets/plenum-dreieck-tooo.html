@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!-- ***************************************************************
+* Diese Datei gehört zum  WebEng-Kurs an der HNU
+* Copyright (c) by Simon Jegl
+* Licensed under GPL3, see http://www.gnu.org/licenses/gpl.html
+******************************************************************** -->
+<html>
+    <head>
+        <title>Dreieck</title>
+        <meta charset="UTF-8" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <style>
+            .rot{
+                color:red;
+            }
+            .gelb{
+                color:yellow;
+            }
+            .blau{
+                color:blue;
+            }
+            .gruen{
+                color:green;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Mein Dreieck</h2>
+        <div class="rot">#</div>
+        <div>##</div>
+        <div>###</div>
+        <div>####</div>
+        <br/>
+        <h2>Mein 
+            <span class="rot">b</span>
+            <span class="gelb">u</span>
+            <span class="blau">n</span>
+            <span class="gruen">t</span>
+            <span class="blau">e</span>
+            <span class="rot">s</span>
+            Dreieck</h2>
+        <div id="rot" class="rot">#</div>
+        <div id="gelb" class="gelb">##</div>
+        <div id="blau" class="blau">###</div>
+        <div id="gruen" class="gruen">####</div>
+
+        <button onclick="hello()">Klick mich</button>
+        <br/>
+        <button onclick="faerben('orange');">Färbe orange!</button>
+        <br/>
+        <button onclick="faerben2();">Färbe orange (v2)!</button>
+        <br/>
+        <button onmouseover="entfaerben();">Reset!</button>
+        <br/>
+        <input id="meineFarbe" type="text"/>
+        <button ondblclick="faerbenToo()">Färbe in Wunschfarbe</button>
+
+    <script type="text/javascript">
+        console.log("Hallo IMUK-3!")
+       // alert ("Hello World 1!");
+        function hello (){
+            console.log("Aufruf function hello ");
+            alert("Hello World 2!");
+        }
+        function faerben(farbe){
+            console.log("Aufruf function faerben mit "+ farbe);
+            console.log(`Aufruf function faerben mit ${farbe}`);
+
+            $("#rot").css("color", farbe);
+            $("#gelb").css("color", farbe);
+            $("#blau").css("color", farbe);
+            $("#gruen").css("color", farbe);
+        }
+        function faerbenToo(){
+            console.log("Aufruf function faerbenToo ");
+            var farbe=$(`#meineFarbe`).val();
+            faerben(farbe);
+        }
+        function entfaerben(){
+            console.log("Aufruf function entfaerben ");
+
+            $("#rot").css("color", "red");
+            $("#gelb").css("color", "yellow");
+            $("#gruen").css("color", "green");
+            $("#blau").css("color", "blue");
+        }
+
+        function faerben2(){
+            console.log("Aufruf function faerben2 ");
+            var elems = document.getElementsByClassName("rot");
+            for(var i=0; i<elems.length; i++){
+                elems[i].style.color="orange";
+            }
+        }
+        //faerben();
+    </script>
+    </body>
+</html>
