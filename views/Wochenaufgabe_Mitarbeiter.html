@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!-- ***************************************************************
+*    Diese Datei gehört zum  WebEng-Kurs an der HNU
+*    Copyright (c) by Simon Jegl und Noah Ringle
+*    Frei benutzbar von WebEng-Studierenden
+******************************************************************** -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <title>Mitarbeiter</title>
+
+
+    <style>
+
+        .maske {
+            background: #858585;
+            border: solid 10px #c5c5c5;
+        }
+
+        .kleiner {
+            width: 150px;
+        }
+
+        td, th, h2, h1 {
+            font-family: Helvetica, sans-serif;
+            padding-left: 15px;
+            padding-right: 15px;
+            text-align: left;
+        }
+
+        th {
+            font-family: Arial;
+        }
+
+        #einlogButton, #auslogButton {
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<h1>Das Wechseln der Masken (Abgabe 1 Architekt Simon Jegl/Noah Ringle)</h1>
+
+<hr>
+
+<!-- EINLOGBUTTON-->
+
+<h2>Mitarbeiter</h2>
+<button id="einlogButton" onclick="wechselnMaske('loginMaske')">
+    EinLoggen
+</button>
+
+<!-- AUSLOGBUTTON-->
+
+<button id="auslogButton" onclick="wechselnMaske('datenMaske');nichtsichtbar('anlegeButton');
+wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichtsichtbar('zweiKnöpfe');">
+    Ausloggen
+</button>
+
+<hr>
+
+<!-- LOGINMASKE-->
+
+
+<div id="loginMaske" class="maske">
+    <h2>Logge Dich ein!</h2>
+    <table id="tabelle">
+        <tr>
+            <td>
+                <label>Name</label>
+            </td>
+            <td>
+                <input class="rund" type="text" value="Gib Deinen Namen ein"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Passwort</label>
+            </td>
+            <td>
+                <input class="rund" type="password" value="Gib Dein Passwort ein"/>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button onclick="wechselnMaske('datenMaske');sichtbar('anlegeButton');sichtbar('auslogButton');nichtsichtbar('einlogButton');wechselnKnopfan();sichtbar('zweiKnöpfe');">
+                    Einloggen
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- EINGABEMASKE-->
+
+
+<div id="eingabeMaske" class="maske">
+    <h2>Gebe neue Mitarbeiter ein!</h2>
+    <form action="javascript:wechselnMaske('datenMaske')">
+        <table id="tabelle2">
+            <tr>
+                <td>
+                    <label>Name</label>
+                </td>
+                <td>
+                    <input class="rund" type="text" value="Name eingeben"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Verfügbarkeit</label>
+                </td>
+                <td>
+                    <input class="rund" type="text" value="Verfügbarkeit eingeben"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Stil</label>
+                </td>
+                <td>
+                    <input class="rund" type="text" value="Stil eingeben"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Spezialisierung</label>
+                </td>
+                <td>
+                    <input class="rund" type="text" value="Spezialisierung eingeben"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Telefonnummer</label>
+                </td>
+                <td>
+                    <input class="rund" type="text" value="Telefonnummer eingeben"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Email</label>
+                </td>
+                <td>
+                    <input class="rund" type="text" value="Email eingeben"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Bild</label>
+                </td>
+                <td>
+                    <input class="rund" type="text" value="Bildsource eingeben"/>
+                </td>
+            <tr>
+                <td></td>
+                <td>
+
+                    <input type="submit" value="Speichern">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<!-- DATENMASKE-->
+
+
+<div id="datenMaske" class="maske">
+    <h2>Folgende Mitarbeiter stehen zur Auswahl</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Verfügbarkeit</th>
+            <th>Stil</th>
+            <th>Spezialisierung</th>
+            <th>Erfahrung</th>
+            <th>Telefonnummer</th>
+            <th>Geschäfts-Email</th>
+            <th>Bild</th>
+            <th id="zweiKnöpfe">Knöpfe</th>
+        </tr>
+        </thead>
+        <tbody id="datenMaskeZeilen">
+
+        </tbody>
+
+    </table>
+    <button id="anlegeButton" onclick="wechselnMaske('eingabeMaske')"> Anlegen</button>
+</div>
+
+
+<script>
+    //AUFRUF DER FUNKTION START()
+
+
+    //AUFRUF EINER DER 3 MASKEN ÜBER DIE ZUGEHÖRIGE ID
+    function wechselnMaske(input) {
+        console.log(input);
+        //ALLE MASKEN WERDEN AUSGEBLENDET
+        var masken = document.getElementsByClassName("maske");
+        for (var i = 0; i < masken.length; i++) {
+
+            masken[i].style.display = "none";
+
+        }
+        //DIE AUSGEWÄHLTE MASKE WIRD EINGEBLENDET
+        document.getElementById(input).style.display = "block";
+    }
+
+    //AUSBLENDEN EINES ELEMENTS(AKTUELL BUTTON) ÜBER DIE ZUGEHÖRIGE ID
+    function nichtsichtbar(idinput) {
+        console.log(` Auruf der Funktion nichtsichtbar mit der ID
+             ${idinput}`)
+        document.getElementById(idinput).style.display = "none";
+    }
+
+    //EINBLENDEN EINES ELEMENTS(AKTUELL BUTTON) ÜBER DIE ZUGEHÖRIGE ID
+    function sichtbar(idinput) {
+        console.log(` Auruf der Funktion sichtbar mit der ID
+             ${idinput}`)
+        document.getElementById(idinput).style.display = "block";
+    }
+
+    //AUSBLENDEN ALLER ELEMENTE (KNÖPFE) MIT DER KLASSE "KNOPF"
+    function wechselnKnopfaus() {
+        var knopf = document.getElementsByClassName("knopf");
+        for (var i = 0; i < knopf.length; i++) {
+
+            knopf[i].style.display = "none";
+
+        }
+
+    }
+
+    //EINBLENDEN ALLER ELEMENTE (KNÖPFE) MIT DER KLASSE "KNOPF"
+    function wechselnKnopfan() {
+        var knopf = document.getElementsByClassName("knopf");
+        for (var i = 0; i < knopf.length; i++) {
+
+            knopf[i].style.display = "block";
+
+        }
+
+    }
+
+    //DIESE FUNKTION RUFT AM ANFANG ALLE FUNKTIONEN MIT DEN ZUGEHÖRIGEN ÜBERGABEWERTEN AUF DASS ALLES AM ANFNAG PASST
+    function start() {
+        wechselnKnopfaus();
+        nichtsichtbar("zweiKnöpfe");
+        wechselnMaske("datenMaske");
+        nichtsichtbar("anlegeButton");
+        nichtsichtbar("auslogButton");
+    }
+
+
+
+
+
+
+    function Mitarbeiter (name, verfuegbarkeit, stil, spezialisierung, erfahrung,telnummer, email, bild ){
+        console.log(` Auruf des Konstruktors Mitarbeiter mit
+             ${name},
+             ${verfuegbarkeit},
+             ${stil},
+             ${spezialisierung},
+             ${erfahrung},
+             ${telnummer},
+             ${email},
+             ${bild},`);
+        this.name = name;
+        this.verfuegbarkeit = verfuegbarkeit;
+        this.stil = stil;
+        this.spezialisierung= spezialisierung;
+        this.erfahrung = erfahrung;
+        this.telnummer = telnummer;
+        this.email = email;
+        this.bild = bild;
+
+    }
+    var mitarbeiterArray = new Array();
+
+    //mitarbeiterArray[0]=new Mitarbeiter("Paul","Verfügbar","Barrock","Bad","20 Jahre","08929224","paul.walker@architekt.de","pics/michael.jpeg");
+    mitarbeiterArray[0]=new Mitarbeiter("Mark Miller","Verfügbar","Barrock","Bad","20 Jahre","0176373893"," mark.miller@architekt.de","pics/mark.jpeg");
+    mitarbeiterArray[1]=new Mitarbeiter("Michael Jäger","nicht Verfügbar","Jugendstil","Wohnzimmer","2 Jahre","054673733"," michael.jaeger@architekt.de","pics/michael.jpeg");
+    mitarbeiterArray[2]=new Mitarbeiter("Maria Magdalena","Verfügbar","Neo","Garten","10 Jahre"," 01790383 ","  maria.magdalena@architekt.de","pics/Maraia.jpg");
+
+    console.table(mitarbeiterArray);
+
+    function lesenAusArray() {
+        console.log("lesenAusArray");
+
+        $("#datenMaskeZeilen").empty();
+
+
+        for (var i = 0; i < mitarbeiterArray.length; i++) {
+            var myHTML = `<tr>
+
+                            <td>${mitarbeiterArray[i].name}</td>
+                            <td>${mitarbeiterArray[i].verfuegbarkeit}</td>
+                            <td>${mitarbeiterArray[i].stil}</td>
+                            <td>${mitarbeiterArray[i].spezialisierung}</td>
+                            <td>${mitarbeiterArray[i].erfahrung}</td>
+                            <td>${mitarbeiterArray[i].telnummer}</td>
+                            <td>${mitarbeiterArray[i].email}</td>
+                            <td> <img class="kleiner" src=" ${mitarbeiterArray[i].bild}"></td>
+                            <td>
+                <button class="knopf" onclick="alert('Erfolgreich gelöscht')"> Löschen</button>
+                <button class="knopf" onclick="wechselnMaske('eingabeMaske')"> Ändern</button>
+            </td>
+ </tr>`
+            $('#datenMaskeZeilen').append(myHTML);
+
+
+        }
+    }
+    lesenAusArray();
+
+    //AUFRUF DER FUNKTION START()
+    start();
+</script>
+</body>
+</html>
+
+
+
+
+
