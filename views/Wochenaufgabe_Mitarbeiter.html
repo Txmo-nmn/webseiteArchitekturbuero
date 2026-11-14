@@ -102,14 +102,14 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
 
 <div id="eingabeMaske" class="maske">
     <h2>Gebe neue Mitarbeiter ein!</h2>
-    <form action="javascript:wechselnMaske('datenMaske')">
+    <form action="javascript:wechselnMaske('datenMaske');neuerMitarbeiter();">
         <table id="tabelle2">
             <tr>
                 <td>
                     <label>Name</label>
                 </td>
                 <td>
-                    <input class="rund" type="text" value="Name eingeben"/>
+                    <input id="nameInput" class="rund" type="text" value="Name eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -117,7 +117,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Verfügbarkeit</label>
                 </td>
                 <td>
-                    <input class="rund" type="text" value="Verfügbarkeit eingeben"/>
+                    <input id="verfuegbarkeitInput" class="rund" type="text" value="Verfügbarkeit eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -125,7 +125,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Stil</label>
                 </td>
                 <td>
-                    <input class="rund" type="text" value="Stil eingeben"/>
+                    <input id="stilInput" class="rund" type="text" value="Stil eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -133,7 +133,15 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Spezialisierung</label>
                 </td>
                 <td>
-                    <input class="rund" type="text" value="Spezialisierung eingeben"/>
+                    <input id="spezialisierungInput" class="rund" type="text" value="Spezialisierung eingeben"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Erfahrung</label>
+                </td>
+                <td>
+                    <input id="erfahrungInput" class="rund" type="text" value="Erfahrung eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -141,7 +149,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Telefonnummer</label>
                 </td>
                 <td>
-                    <input class="rund" type="text" value="Telefonnummer eingeben"/>
+                    <input id="telefonnummerInput" class="rund" type="text" value="Telefonnummer eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -149,7 +157,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Email</label>
                 </td>
                 <td>
-                    <input class="rund" type="text" value="Email eingeben"/>
+                    <input id="emailInput" class="rund" type="text" value="Email eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -157,7 +165,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Bild</label>
                 </td>
                 <td>
-                    <input class="rund" type="text" value="Bildsource eingeben"/>
+                    <input id="bildInput" class="rund" type="text" value="Bildsource eingeben"/>
                 </td>
             <tr>
                 <td></td>
@@ -198,74 +206,64 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
 
 
 <script>
-    //AUFRUF DER FUNKTION START()
-
+    var aktuelleStelle = -1;
 
     //AUFRUF EINER DER 3 MASKEN ÜBER DIE ZUGEHÖRIGE ID
     function wechselnMaske(input) {
-        console.log(input);
+        console.log(` Auruf der Funktion wechselnMaske mit der ID
+             ${input}`)
         //ALLE MASKEN WERDEN AUSGEBLENDET
-        var masken = document.getElementsByClassName("maske");
-        for (var i = 0; i < masken.length; i++) {
+        $('.maske').css('display', 'none');
 
-            masken[i].style.display = "none";
-
-        }
         //DIE AUSGEWÄHLTE MASKE WIRD EINGEBLENDET
-        document.getElementById(input).style.display = "block";
+        $('#' + input).css('display', 'block');
     }
 
     //AUSBLENDEN EINES ELEMENTS(AKTUELL BUTTON) ÜBER DIE ZUGEHÖRIGE ID
     function nichtsichtbar(idinput) {
         console.log(` Auruf der Funktion nichtsichtbar mit der ID
              ${idinput}`)
-        document.getElementById(idinput).style.display = "none";
+
+        $('#' + idinput).css('display', 'none');
+
+
     }
 
     //EINBLENDEN EINES ELEMENTS(AKTUELL BUTTON) ÜBER DIE ZUGEHÖRIGE ID
     function sichtbar(idinput) {
-        console.log(` Auruf der Funktion sichtbar mit der ID
-             ${idinput}`)
-        document.getElementById(idinput).style.display = "block";
+        console.log(` Auruf der Funktion sichtbar mit der ID ${idinput}`)
+        $('#' + idinput).css('display', 'block');
     }
 
     //AUSBLENDEN ALLER ELEMENTE (KNÖPFE) MIT DER KLASSE "KNOPF"
     function wechselnKnopfaus() {
-        var knopf = document.getElementsByClassName("knopf");
-        for (var i = 0; i < knopf.length; i++) {
+        console.log(` Auruf der Funktion wechselKnopfaus`)
 
-            knopf[i].style.display = "none";
-
-        }
-
+        $('.knopf').css('display', 'none');
     }
 
     //EINBLENDEN ALLER ELEMENTE (KNÖPFE) MIT DER KLASSE "KNOPF"
     function wechselnKnopfan() {
-        var knopf = document.getElementsByClassName("knopf");
-        for (var i = 0; i < knopf.length; i++) {
+        console.log(` Auruf der Funktion wechselKnopfan`)
 
-            knopf[i].style.display = "block";
+        $('.knopf').css('display', 'block');
 
-        }
 
     }
 
     //DIESE FUNKTION RUFT AM ANFANG ALLE FUNKTIONEN MIT DEN ZUGEHÖRIGEN ÜBERGABEWERTEN AUF DASS ALLES AM ANFNAG PASST
     function start() {
+        lesenAusArray();
         wechselnKnopfaus();
         nichtsichtbar("zweiKnöpfe");
         wechselnMaske("datenMaske");
         nichtsichtbar("anlegeButton");
         nichtsichtbar("auslogButton");
+
     }
 
 
-
-
-
-
-    function Mitarbeiter (name, verfuegbarkeit, stil, spezialisierung, erfahrung,telnummer, email, bild ){
+    function Mitarbeiter(name, verfuegbarkeit, stil, spezialisierung, erfahrung, telnummer, email, bild) {
         console.log(` Auruf des Konstruktors Mitarbeiter mit
              ${name},
              ${verfuegbarkeit},
@@ -275,22 +273,24 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
              ${telnummer},
              ${email},
              ${bild},`);
+
         this.name = name;
         this.verfuegbarkeit = verfuegbarkeit;
         this.stil = stil;
-        this.spezialisierung= spezialisierung;
+        this.spezialisierung = spezialisierung;
         this.erfahrung = erfahrung;
         this.telnummer = telnummer;
         this.email = email;
         this.bild = bild;
 
     }
+
     var mitarbeiterArray = new Array();
 
     //mitarbeiterArray[0]=new Mitarbeiter("Paul","Verfügbar","Barrock","Bad","20 Jahre","08929224","paul.walker@architekt.de","pics/michael.jpeg");
-    mitarbeiterArray[0]=new Mitarbeiter("Mark Miller","Verfügbar","Barrock","Bad","20 Jahre","0176373893"," mark.miller@architekt.de","pics/mark.jpeg");
-    mitarbeiterArray[1]=new Mitarbeiter("Michael Jäger","nicht Verfügbar","Jugendstil","Wohnzimmer","2 Jahre","054673733"," michael.jaeger@architekt.de","pics/michael.jpeg");
-    mitarbeiterArray[2]=new Mitarbeiter("Maria Magdalena","Verfügbar","Neo","Garten","10 Jahre"," 01790383 ","  maria.magdalena@architekt.de","pics/Maraia.jpg");
+    mitarbeiterArray[0] = new Mitarbeiter("Mark Miller", "Verfügbar", "Barrock", "Bad", "20 Jahre", "0176373893", " mark.miller@architekt.de", "pics/mark.jpeg");
+    mitarbeiterArray[1] = new Mitarbeiter("Michael Jäger", "nicht Verfügbar", "Jugendstil", "Wohnzimmer", "2 Jahre", "054673733", " michael.jaeger@architekt.de", "pics/michael.jpeg");
+    mitarbeiterArray[2] = new Mitarbeiter("Maria Magdalena", "Verfügbar", "Neo", "Garten", "10 Jahre", " 01790383 ", "  maria.magdalena@architekt.de", "pics/Maraia.jpg");
 
     console.table(mitarbeiterArray);
 
@@ -312,8 +312,8 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                             <td>${mitarbeiterArray[i].email}</td>
                             <td> <img class="kleiner" src=" ${mitarbeiterArray[i].bild}"></td>
                             <td>
-                <button class="knopf" onclick="alert('Erfolgreich gelöscht')"> Löschen</button>
-                <button class="knopf" onclick="wechselnMaske('eingabeMaske')"> Ändern</button>
+                <button class="knopf" onclick="loeschenMitarbeiter(${i})"> Löschen</button>
+                <button class="knopf" onclick="wechselnMaske('eingabeMaske');aendernMitarbeiter(${i})"> Ändern</button>
             </td>
  </tr>`
             $('#datenMaskeZeilen').append(myHTML);
@@ -321,7 +321,58 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
 
         }
     }
-    lesenAusArray();
+
+    function neuerMitarbeiter() {
+        console.log(`Aufruf der Funktion neuerMitarbeiter mit   ${name},
+                        ${verfuegbarkeit},
+                        ${stil},
+                        ${spezialisierung},
+                        ${erfahrung},
+                        ${telnummer}
+                        ${email},
+                        ${bild}`);
+
+        var name = $('#nameInput').val();
+        var verfuegbarkeit = $('#verfuegbarkeitInput').val();
+        var stil = $('#stilInput').val();
+        var spezialisierung = $('#spezialisierungInput').val();
+        var erfahrung = $('#erfahrungInput').val();
+        var telnummer = $('#telefonnummerInput').val();
+        var email = $('#emailInput').val();
+        var bild = $('#bildInput').val();
+
+
+        if (aktuelleStelle === -1) {
+            mitarbeiterArray[mitarbeiterArray.length] = new Mitarbeiter(name, verfuegbarkeit, stil, spezialisierung, erfahrung, telnummer, email, bild);
+
+        } else {
+            mitarbeiterArray[aktuelleStelle] = new Mitarbeiter(name, verfuegbarkeit, stil, spezialisierung, erfahrung, telnummer, email, bild);
+
+        }
+
+        lesenAusArray()
+        aktuelleStelle = -1;
+    }
+
+
+    function aendernMitarbeiter(stelle) {
+        console.log(`Aufruf der Funktion aendernMitarbeiter an der ${stelle}`);
+        aktuelleStelle = stelle;
+        $('#nameInput').val(mitarbeiterArray[stelle].name);
+        $('#verfuegbarkeitInput').val(mitarbeiterArray[stelle].verfuegbarkeit);
+        $('#stilInput').val(mitarbeiterArray[stelle].stil);
+        $('#spezialisierungInput').val(mitarbeiterArray[stelle].spezialisierung);
+        $('#erfahrungInput').val(mitarbeiterArray[stelle].erfahrung);
+        $('#telefonnummerInput').val(mitarbeiterArray[stelle].telnummer);
+        $('#emailInput').val(mitarbeiterArray[stelle].email);
+        $('#bildInput').val(mitarbeiterArray[stelle].bild);
+
+    }
+    function loeschenMitarbeiter(stelle) {
+mitarbeiterArray.splice(stelle,1);
+lesenAusArray();
+    }
+
 
     //AUFRUF DER FUNKTION START()
     start();
