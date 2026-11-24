@@ -7,8 +7,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <title>Mitarbeiter</title>
+    <script type="text/javascript"
+            src="client-js/jquery-3.7.1.min.js"></script>    <title>Mitarbeiter</title>
 
 
     <style>
@@ -102,14 +102,14 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
 
 <div id="eingabeMaske" class="maske">
     <h2>Gebe neue Mitarbeiter ein!</h2>
-    <form action="javascript:wechselnMaske('datenMaske');neuerMitarbeiter();">
+    <form id="eingabeForm" action="javascript:anlegenImArray();">
         <table id="tabelle2">
             <tr>
                 <td>
                     <label>Name</label>
                 </td>
                 <td>
-                    <input id="nameInput" class="rund" type="text" value="Name eingeben"/>
+                    <input id="nameInput" class="rund" type="text" placeholder="Name eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -117,7 +117,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Verfügbarkeit</label>
                 </td>
                 <td>
-                    <input id="verfuegbarkeitInput" class="rund" type="text" value="Verfügbarkeit eingeben"/>
+                    <input id="verfuegbarkeitInput" class="rund" type="text" placeholder="Verfügbarkeit eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -125,7 +125,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Stil</label>
                 </td>
                 <td>
-                    <input id="stilInput" class="rund" type="text" value="Stil eingeben"/>
+                    <input id="stilInput" class="rund" type="text" placeholder="Stil eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -133,7 +133,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Spezialisierung</label>
                 </td>
                 <td>
-                    <input id="spezialisierungInput" class="rund" type="text" value="Spezialisierung eingeben"/>
+                    <input id="spezialisierungInput" class="rund" type="text" placeholder="Spezialisierung eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -141,7 +141,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Erfahrung</label>
                 </td>
                 <td>
-                    <input id="erfahrungInput" class="rund" type="text" value="Erfahrung eingeben"/>
+                    <input id="erfahrungInput" class="rund" type="text" placeholder="Erfahrung eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -149,7 +149,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Telefonnummer</label>
                 </td>
                 <td>
-                    <input id="telefonnummerInput" class="rund" type="text" value="Telefonnummer eingeben"/>
+                    <input id="telefonnummerInput" class="rund" type="text" placeholder="Telefonnummer eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -157,7 +157,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Email</label>
                 </td>
                 <td>
-                    <input id="emailInput" class="rund" type="text" value="Email eingeben"/>
+                    <input id="emailInput" class="rund" type="text" placeholder="Email eingeben"/>
                 </td>
             </tr>
             <tr>
@@ -165,7 +165,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                     <label>Bild</label>
                 </td>
                 <td>
-                    <input id="bildInput" class="rund" type="text" value="Bildsource eingeben"/>
+                    <input id="bildInput" class="rund" type="text" placeholder="Bildsource eingeben"/>
                 </td>
             <tr>
                 <td></td>
@@ -204,12 +204,13 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
     <button id="anlegeButton" onclick="wechselnMaske('eingabeMaske')"> Anlegen</button>
 </div>
 
+<!-- DATENMASKE
 
+<div id="datenMaskeZeilen"></div>-->
 <script>
-    var aktuelleStelle = -1;
 
     //AUFRUF EINER DER 3 MASKEN ÜBER DIE ZUGEHÖRIGE ID
-    function wechselnMaske(input) {
+    function wechselnMaske2(input) {
         console.log(` Auruf der Funktion wechselnMaske mit der ID
              ${input}`)
         //ALLE MASKEN WERDEN AUSGEBLENDET
@@ -217,6 +218,42 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
 
         //DIE AUSGEWÄHLTE MASKE WIRD EINGEBLENDET
         $('#' + input).css('display', 'block');
+    }
+    function wechselnMaske(sichtbareMaske, mode) {
+        console.log("wechselnMaske mit " + sichtbareMaske);
+        $(".maske").hide();
+        $("#eingabeMaske input[type='text']").val("");
+        if (mode !== undefined) {
+            if (mode === "anlegen") {
+                //Anlegen
+                $("#eingabeMaske input[type='text']").val("");
+                $("#eingabeForm").attr("action", "javascript:anlegenImArray()");
+               $("#eingabeMaske h2").html("Lege einen neuen Mitarbeiter an")
+            } else {
+                //Aendern
+                var name = datenArray[mode].name;
+                var verfuegbarkeit = datenArray[mode].verfuegbarkeit;
+                var stil = datenArray[mode].stil;
+                var spezialisierung = datenArray[mode].spezialisierung;
+                var erfahrung = datenArray[mode].erfahrung;
+                var telefonnummer=datenArray[mode].telnummer;
+                var email=datenArray[mode].email;
+                var bild=datenArray[mode].bild;
+                $("#nameInput").val(name);
+                $("#verfuegbarkeitInput").val(verfuegbarkeit);
+                $("#stilInput").val(stil);
+                $("#spezialisierungInput").val(spezialisierung);
+                $("#erfahrungInput").val(erfahrung);
+                $("#telefonnummerInput").val(telefonnummer);
+                $("#emailInput").val(email);
+                $("#bildInput").val(bild);
+                $("#eingabeForm").attr("action", "javascript:aendernImArray(" +
+                    mode +
+                    ")");
+               $("#eingabeMaske h2").html(`Ändere den Mitarbeiter ${name}`)
+            }
+        }
+        $("#" + sichtbareMaske).show();
     }
 
     //AUSBLENDEN EINES ELEMENTS(AKTUELL BUTTON) ÜBER DIE ZUGEHÖRIGE ID
@@ -285,14 +322,13 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
 
     }
 
-    var mitarbeiterArray = new Array();
+    var datenArray = new Array();
 
-    //mitarbeiterArray[0]=new Mitarbeiter("Paul","Verfügbar","Barrock","Bad","20 Jahre","08929224","paul.walker@architekt.de","pics/michael.jpeg");
-    mitarbeiterArray[0] = new Mitarbeiter("Mark Miller", "Verfügbar", "Barrock", "Bad", "20 Jahre", "0176373893", " mark.miller@architekt.de", "pics/mark.jpeg");
-    mitarbeiterArray[1] = new Mitarbeiter("Michael Jäger", "nicht Verfügbar", "Jugendstil", "Wohnzimmer", "2 Jahre", "054673733", " michael.jaeger@architekt.de", "pics/michael.jpeg");
-    mitarbeiterArray[2] = new Mitarbeiter("Maria Magdalena", "Verfügbar", "Neo", "Garten", "10 Jahre", " 01790383 ", "  maria.magdalena@architekt.de", "pics/Maraia.jpg");
+    datenArray[0] = new Mitarbeiter("Mark Miller", "Verfügbar", "Barrock", "Bad", "20 Jahre", "0176373893", " mark.miller@architekt.de", "pics/mark.jpeg");
+    datenArray[1] = new Mitarbeiter("Michael Jäger", "nicht Verfügbar", "Jugendstil", "Wohnzimmer", "2 Jahre", "054673733", " michael.jaeger@architekt.de", "pics/michael.jpeg");
+    datenArray[2] = new Mitarbeiter("Maria Magdalena", "Verfügbar", "Neo", "Garten", "10 Jahre", " 01790383 ", "  maria.magdalena@architekt.de", "pics/Maraia.jpg");
 
-    console.table(mitarbeiterArray);
+    console.table(datenArray);
 
     function lesenAusArray() {
         console.log("lesenAusArray");
@@ -300,20 +336,20 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
         $("#datenMaskeZeilen").empty();
 
 
-        for (var i = 0; i < mitarbeiterArray.length; i++) {
+        for (var i = 0; i < datenArray.length; i++) {
             var myHTML = `<tr>
 
-                            <td>${mitarbeiterArray[i].name}</td>
-                            <td>${mitarbeiterArray[i].verfuegbarkeit}</td>
-                            <td>${mitarbeiterArray[i].stil}</td>
-                            <td>${mitarbeiterArray[i].spezialisierung}</td>
-                            <td>${mitarbeiterArray[i].erfahrung}</td>
-                            <td>${mitarbeiterArray[i].telnummer}</td>
-                            <td>${mitarbeiterArray[i].email}</td>
-                            <td> <img class="kleiner" src=" ${mitarbeiterArray[i].bild}"></td>
+                            <td>${datenArray[i].name}</td>
+                            <td>${datenArray[i].verfuegbarkeit}</td>
+                            <td>${datenArray[i].stil}</td>
+                            <td>${datenArray[i].spezialisierung}</td>
+                            <td>${datenArray[i].erfahrung}</td>
+                            <td>${datenArray[i].telnummer}</td>
+                            <td>${datenArray[i].email}</td>
+                            <td> <img class="kleiner" src=" ${datenArray[i].bild}"></td>
                             <td>
-                <button class="knopf" onclick="loeschenMitarbeiter(${i})"> Löschen</button>
-                <button class="knopf" onclick="wechselnMaske('eingabeMaske');aendernMitarbeiter(${i})"> Ändern</button>
+                <button class="knopf" onclick="loeschenImArray(${i})"> Löschen</button>
+               <button class="knopf" onclick="wechselnMaske('eingabeMaske', ${i})"> Ändern</button>
             </td>
  </tr>`
             $('#datenMaskeZeilen').append(myHTML);
@@ -321,9 +357,36 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
 
         }
     }
+    function lesenAusArray2() {
+        console.log("lesenAusArray");
 
-    function neuerMitarbeiter() {
-        console.log(`Aufruf der Funktion neuerMitarbeiter mit   ${name},
+        $("#datenMaskeZeilen").empty();
+
+
+        for (var i = 0; i < datenArray.length; i++) {
+            var myHTML = `<div>
+
+                            <div>${datenArray[i].name}</div>
+                            <div>${datenArray[i].verfuegbarkeit}</div>
+                            <div>${datenArray[i].stil}</div>
+                            <div>${datenArray[i].spezialisierung}</div>
+                            <div>${datenArray[i].erfahrung}</div>
+                            <div>${datenArray[i].telnummer}</div>
+                            <div>${datenArray[i].email}</div>
+                            <div> <img class="kleiner" src=" ${datenArray[i].bild}"></div>
+                            <div>
+                <button class="knopf" onclick="loeschenImArray(${i})"> Löschen</button>
+                <button class="knopf" onclick="wechselnMaske('eingabeMaske', ${i})"> Ändern</button>
+            </div>
+ </div>`
+            $('#datenMaskeZeilen').append(myHTML);
+
+
+        }
+    }
+
+    function anlegenImArray() {
+        console.log(`Aufruf der Funktion anlegenImArray mit   ${name},
                         ${verfuegbarkeit},
                         ${stil},
                         ${spezialisierung},
@@ -331,6 +394,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                         ${telnummer}
                         ${email},
                         ${bild}`);
+
 
         var name = $('#nameInput').val();
         var verfuegbarkeit = $('#verfuegbarkeitInput').val();
@@ -341,36 +405,49 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
         var email = $('#emailInput').val();
         var bild = $('#bildInput').val();
 
+        var neuerMitarbeiter = new Mitarbeiter(name,verfuegbarkeit,stil, spezialisierung, erfahrung, telnummer,email,bild);
+datenArray.push(neuerMitarbeiter);
+console.table(datenArray);
+lesenAusArray();
+wechselnMaske('datenMaske');
 
-        if (aktuelleStelle === -1) {
-            mitarbeiterArray[mitarbeiterArray.length] = new Mitarbeiter(name, verfuegbarkeit, stil, spezialisierung, erfahrung, telnummer, email, bild);
+
+    }
+
+    function aendernImArray(stelle) {
+        console.log(`Aufruf der Funktion aendernMitarbeiter an der ${stelle}`);
+
+        var name = $('#nameInput').val();
+        var verfuegbarkeit = $('#verfuegbarkeitInput').val();
+        var stil = $('#stilInput').val();
+        var spezialisierung = $('#spezialisierungInput').val();
+        var erfahrung = $('#erfahrungInput').val();
+        var telnummer = $('#telefonnummerInput').val();
+        var email = $('#emailInput').val();
+        var bild = $('#bildInput').val();
+
+        var neuerMitarbeiter = new Mitarbeiter(name,verfuegbarkeit,stil, spezialisierung, erfahrung, telnummer,email,bild);
+datenArray[stelle] = neuerMitarbeiter;
+lesenAusArray();
+wechselnMaske('datenMaske');
+    }
+
+
+    function loeschenImArray(index) {
+        console.log("loeschenImArray mit " + index);
+        var entscheidung = confirm(`Wollen sie wirkklich den Mitarbeiter ${datenArray[index].name} löschen?`);
+        console.log("USER wollte loeschen mit " + entscheidung);
+        if (entscheidung) {
+//loeschen
+            console.log(`Der Mitarbeiter ${datenArray[index].name} wurde gelöscht?`);
+            datenArray.splice(index, 1);
+            console.table(datenArray);
 
         } else {
-            mitarbeiterArray[aktuelleStelle] = new Mitarbeiter(name, verfuegbarkeit, stil, spezialisierung, erfahrung, telnummer, email, bild);
-
+//nichts machen
         }
-
-        lesenAusArray()
-        aktuelleStelle = -1;
-    }
-
-
-    function aendernMitarbeiter(stelle) {
-        console.log(`Aufruf der Funktion aendernMitarbeiter an der ${stelle}`);
-        aktuelleStelle = stelle;
-        $('#nameInput').val(mitarbeiterArray[stelle].name);
-        $('#verfuegbarkeitInput').val(mitarbeiterArray[stelle].verfuegbarkeit);
-        $('#stilInput').val(mitarbeiterArray[stelle].stil);
-        $('#spezialisierungInput').val(mitarbeiterArray[stelle].spezialisierung);
-        $('#erfahrungInput').val(mitarbeiterArray[stelle].erfahrung);
-        $('#telefonnummerInput').val(mitarbeiterArray[stelle].telnummer);
-        $('#emailInput').val(mitarbeiterArray[stelle].email);
-        $('#bildInput').val(mitarbeiterArray[stelle].bild);
-
-    }
-    function loeschenMitarbeiter(stelle) {
-mitarbeiterArray.splice(stelle,1);
-lesenAusArray();
+        //Aktualisieren der Datenmaske
+        lesenAusArray();
     }
 
 
