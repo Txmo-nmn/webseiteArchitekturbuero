@@ -56,8 +56,7 @@
 
 <!-- AUSLOGBUTTON-->
 
-<button id="auslogButton" onclick="wechselnMaske('datenMaske');nichtsichtbar('anlegeButton');
-wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichtsichtbar('zweiKnöpfe');">
+<button id="auslogButton" onclick="buttonausloggen()">
     Ausloggen
 </button>
 
@@ -88,7 +87,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
         <tr>
             <td></td>
             <td>
-                <button onclick="wechselnMaske('datenMaske');sichtbar('anlegeButton');sichtbar('auslogButton');nichtsichtbar('einlogButton');wechselnKnopfan();sichtbar('zweiKnöpfe');">
+                <button onclick="buttoneinloggen()">
                     Einloggen
                 </button>
             </td>
@@ -201,24 +200,14 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
         </tbody>
 
     </table>
-    <button id="anlegeButton" onclick="wechselnMaske('eingabeMaske')"> Anlegen</button>
+    <button id="anlegeButton" onclick="wechselnMaske('eingabeMaske','anlegen')"> Anlegen</button>
 </div>
 
 <!-- DATENMASKE
 
-<div id="datenMaskeZeilen"></div>-->
+<div id="datenMaskeZeilen"></div>
+-->
 <script>
-
-    //AUFRUF EINER DER 3 MASKEN ÜBER DIE ZUGEHÖRIGE ID
-    function wechselnMaske2(input) {
-        console.log(` Auruf der Funktion wechselnMaske mit der ID
-             ${input}`)
-        //ALLE MASKEN WERDEN AUSGEBLENDET
-        $('.maske').css('display', 'none');
-
-        //DIE AUSGEWÄHLTE MASKE WIRD EINGEBLENDET
-        $('#' + input).css('display', 'block');
-    }
     function wechselnMaske(sichtbareMaske, mode) {
         console.log("wechselnMaske mit " + sichtbareMaske);
         $(".maske").hide();
@@ -228,7 +217,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                 //Anlegen
                 $("#eingabeMaske input[type='text']").val("");
                 $("#eingabeForm").attr("action", "javascript:anlegenImArray()");
-               $("#eingabeMaske h2").html("Lege einen neuen Mitarbeiter an")
+                $("#eingabeMaske h2").html("Lege einen neuen Mitarbeiter an")
             } else {
                 //Aendern
                 var name = datenArray[mode].name;
@@ -298,8 +287,17 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
         nichtsichtbar("auslogButton");
 
     }
+    //DIESE FUNKTION RUFT ALLE GENNANTEN FUNKTIONEN AUF WENN MAN AUF AUSLOGGEN KLICKT
+function buttonausloggen() {
+        wechselnMaske('datenMaske');nichtsichtbar('anlegeButton');
+    wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichtsichtbar('zweiKnöpfe');
+    }
 
-
+    //DIESE FUNKTION RUFT ALLE GENNANTEN FUNKTIONEN AUF WENN MAN AUF EINLOGGEN KLICKT
+    function buttoneinloggen() {
+        wechselnMaske('datenMaske');sichtbar('anlegeButton');sichtbar('auslogButton');nichtsichtbar('einlogButton');wechselnKnopfan();sichtbar('zweiKnöpfe');
+    }
+//KONSTRUKTOR
     function Mitarbeiter(name, verfuegbarkeit, stil, spezialisierung, erfahrung, telnummer, email, bild) {
         console.log(` Auruf des Konstruktors Mitarbeiter mit
              ${name},
@@ -384,7 +382,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
 
         }
     }
-
+//DIESE FUNKTION LEGT EIN NEUES OBJEKT IM ARRAY AN LETZER STELLE AN
     function anlegenImArray() {
         console.log(`Aufruf der Funktion anlegenImArray mit   ${name},
                         ${verfuegbarkeit},
@@ -394,6 +392,7 @@ wechselnKnopfaus();sichtbar('einlogButton');nichtsichtbar('auslogButton');nichts
                         ${telnummer}
                         ${email},
                         ${bild}`);
+
 
 
         var name = $('#nameInput').val();
@@ -413,7 +412,7 @@ wechselnMaske('datenMaske');
 
 
     }
-
+//DIESE FUNKTION ÄNDERT AN DER JEWEILS AUSGEWÄHLTEN STELLE IM ARRAY EIN OBJKET
     function aendernImArray(stelle) {
         console.log(`Aufruf der Funktion aendernMitarbeiter an der ${stelle}`);
 
@@ -432,7 +431,7 @@ lesenAusArray();
 wechselnMaske('datenMaske');
     }
 
-
+//DIESE FUNKTION LOESCHT AN DER JEWEILS AUSGEWÄHLTEN STELLE IM ARRAY EIN OBJEKT NACH ÜBERPRÜFUNG
     function loeschenImArray(index) {
         console.log("loeschenImArray mit " + index);
         var entscheidung = confirm(`Wollen sie wirkklich den Mitarbeiter ${datenArray[index].name} löschen?`);
